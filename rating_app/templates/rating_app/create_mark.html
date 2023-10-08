@@ -1,0 +1,21 @@
+{% extends 'rating_app/base.html' %}
+{% load static %}
+{% block create_page %}
+<section class="wrapper">
+    <h1 class="movie-header">Оценить фильм</h1>
+    <form class="create_rating" action="{% url 'movies:create_page' %}" method="post">
+        {% csrf_token %}
+        <div class="range-container">
+            {{form}}
+            <div id="h4-container">
+                <div id="h4-subcontainer">
+                    <h4>0
+                        <span></span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <button type="submit">Добавить</button>
+    </form>
+</section>
+{% endblock %}

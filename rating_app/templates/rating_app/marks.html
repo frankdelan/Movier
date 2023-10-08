@@ -1,0 +1,80 @@
+{% extends 'rating_app/base.html' %}
+{% load static %}
+{% block rating_page %}
+<section class="wrapper">
+    <h1 class="movie-header">Рейтинг</h1>
+    <div  class="movie-menu">
+        <form action="{% url 'movies:rating_page' %}" method="GET" class="sorting-form">
+            <span>Sorting by: </span>
+            <div>
+                <ul class="sorting-menu">
+                    <li>[ASC]</li>
+                    <li><input type="submit" name="order" value="title" class="sort-item"></li>
+                    <li><input type="submit" name="order" value="year" class="sort-item"></li>
+                    <li><input type="submit" name="order" value="rating" class="sort-item"></li>
+                </ul>
+                <ul class="sorting-menu">
+                    <li>[DESC]</li>
+                    <li><input type="submit" name="order" value="-title" class="sort-item"></li>
+                    <li><input type="submit" name="order" value="-year" class="sort-item"></li>
+                    <li><input type="submit" name="order" value="-rating" class="sort-item"></li>
+                </ul>
+            </div>
+        </form>
+        <div>
+            <a class="go_back" href="{% url 'index_page' %}">Вернуться</a>
+            <a class="rate_new" href="{% url 'movies:create_page' %}">Оценить фильм</a>
+        </div>
+    </div>
+    <form action="{% url 'movies:rating_page' %}" method="post">
+        {% csrf_token %}
+        <div class="main-table">
+            <div class="tbl-header">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Фильм</th>
+                            <th>Год</th>
+                            <th>Ссылка</th>
+                            <th>Рейтинг</th>
+                            <th>Оценка</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tbl-content">
+                <table>
+                    <tbody>
+                    {% for item in object_list %}
+                        <tr>
+                            <td>
+                                <input class="" type="radio" name="film" value="{{item.pk}}">
+                                <label for="film">{{item.title}}</label>
+                            </td>
+                            <td>{{item.year}}</td>
+                            <td><a class="movie-link" href="{{item.link}}">Click</a></td>
+                            <td>{{item.kp_rating}}</td>
+                            <td>{{item.rating}}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="update-btn">
+            <div class="update-rating">
+                <h3>Измените оценку</h3>
+                <input name="new_rating" type="range" value="0" min="0" max="10" step="0.5">
+                <div id="h4-container">
+                    <div id="h4-subcontainer">
+                        <h4>0
+                            <span></span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Изменить</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

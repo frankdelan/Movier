@@ -1,0 +1,14 @@
+{% extends 'wishlist_app/base.html' %}
+{% load static %}
+{% block adding_page %}
+<section class="wrapper">
+    <h1 class="movie-header">Добавить новый фильм!</h1>
+    <form class="create_rating" action="{% url 'wishlists:add_page' %}" method="post">
+        {% csrf_token %}
+        <div class="range-container">
+            {{form}}
+        </div>
+        <button type="submit">Добавить</button>
+    </form>
+</section>
+{% endblock %}

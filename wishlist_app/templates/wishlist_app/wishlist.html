@@ -1,0 +1,76 @@
+{% extends 'wishlist_app/base.html' %}
+{% load static %}
+{% block list_page %}
+<section class="wrapper">
+    <h1 class="movie-header">Wish List</h1>
+    <div class="movie-menu">
+        <form action="{% url 'wishlists:list_page' %}" method="GET" class="sorting-form">
+            <span>Sorting by: </span>
+            <div>
+                <ul class="sorting-menu">
+                    <li>[ASC]</li>
+                    <li><input type="submit" name="title" value="title" class="sort-item"></li>
+                    <li><input type="submit" name="year" value="year" class="sort-item"></li>
+                </ul>
+                <ul class="sorting-menu">
+                    <li>[DESC]</li>
+                    <li><input type="submit" name="-title" value="title" class="sort-item"></li>
+                    <li><input type="submit" name="-year" value="year" class="sort-item"></li>
+                </ul>
+            </div>
+        </form>
+        <div>
+            <a class="go_back" href="{% url 'index_page' %}">Назад</a>
+            <a class="rate_new" href="{% url 'wishlists:add_page' %}">Добавить фильм!</a>
+        </div>
+    </div>
+    <form action="{% url 'wishlists:list_page' %}" method="post">
+        {% csrf_token %}
+        <div class="main-table">
+            <div class="tbl-header">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Постер</th>
+                            <th>Фильм</th>
+                            <th>Год</th>
+                            <th>Ссылка</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tbl-content">
+                <table>
+                    <tbody>
+                    {% for item in object_list %}
+                        <tr>
+                            <td><img src="{{item.poster}}" alt="poster"></td>
+                            <td>
+                                <input class="" type="radio" name="film" value="{{item.kp_id}}">
+                                <label for="film">{{item.title}}</label>
+                            </td>
+                            <td>{{item.year}}</td>
+                            <td><a class="movie-link" href="{{item.link}}">Клик!</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="update-btn">
+            <div class="update-rating">
+                <h3>Choose rating</h3>
+                <input name="rating" type="range" value="0" min="0" max="10" step="0.5">
+                <div id="h4-container">
+                    <div id="h4-subcontainer">
+                        <h4>0
+                            <span></span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Оценить</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

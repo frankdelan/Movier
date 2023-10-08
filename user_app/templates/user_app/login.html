@@ -1,0 +1,20 @@
+{% extends 'user_app/base.html' %}
+{% block login_page %}
+<main class="main">
+    <div class="wrapper">
+        <div class="container">
+            <div class="title">
+                <h2>Войдите в аккаунт</h2>
+            </div>
+            <form action="{% url 'user_app:login_page' %}" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit" class="form-btn">
+                    <div>Войти</div>
+                </button>
+            </form>
+            <span>у вас нет аккаунта, <a class="account" href="{% url 'user_app:register_page' %}">зарегистрируйтесь</a></span>
+        </div>
+    </div>
+</main>
+{% endblock %}
