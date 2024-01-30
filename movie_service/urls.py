@@ -27,3 +27,4 @@ urlpatterns = [
     path('movies/', include('rating_app.urls', namespace='movies')),
     path('wishlist/', include('wishlist_app.urls', namespace='wishlists'))
 ]
+

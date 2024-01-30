@@ -1,7 +1,13 @@
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 data = {
-    'name': 'movies',
-    'user': 'postgres',
-    'password': '7045',
-    'host': 'localhost',
-    'port': '5432'
+    'name': os.environ.get('NAME'),
+    'user': os.environ.get('USER'),
+    'password': os.environ.get('PASS'),
+    'host': os.environ.get('HOST'),
+    'port': os.environ.get('PORT')
 }

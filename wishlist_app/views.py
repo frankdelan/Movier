@@ -65,3 +65,5 @@ class ChooseMovie(TemplateView):
                             year=movie_data.year, link=movie_data.kp_url,
                             kp_rating=movie_data.kp_rate, wish_user=user)
         return HttpResponseRedirect(reverse_lazy('index_page'))
+
+

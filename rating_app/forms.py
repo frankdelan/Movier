@@ -17,3 +17,8 @@ class CreationForm(forms.ModelForm):
     class Meta:
         model = Movie
         fields = ['title', 'rating']
+
+
+class AddIdForm(forms.Form):
+    id = forms.IntegerField(label='', widget=forms.TextInput(attrs={'class': "form-field",
+                                                                    'placeholder': "id"}))
