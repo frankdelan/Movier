@@ -19,12 +19,14 @@ poetry install
 `pip install -r poetry.lock`
 
 Создайте файл .env и задайте значения следующим переменным:
-1. KP_API_KEY - токен api кинопоиска
-2. DB_NAME - название базы данных
-3. HOST
-4. PORT
-5. USER 
-6. PASS
+  1. KP_API_KEY - токен api кинопоиска
+  2. DB_NAME - название базы данных
+  3. HOST
+  4. PORT
+  5. USER 
+  6. PASS
+
+Дамп базы данных находится в файле movie.sql
 
 ## Использование
 
