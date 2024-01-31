@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, ListView,FormView
@@ -27,9 +27,18 @@ class ShowRating(ListView):
         return Movie.objects.filter(movie_user=user).order_by(ordering)
 
     def post(self, request):
-        movie_id: int = int(request.POST['film'])
-        new_rating: float = float(request.POST['new_rating'])
-        Movie.objects.get(pk=movie_id).update(rating=new_rating)
+        action = request.POST.get('action')
+        if action == 'update':
+            movie_id = int(request.POST.get('film'))
+            new_rating = float(request.POST.get('new_rating'))
+            movie = get_object_or_404(Movie, pk=movie_id)
+            movie.rating = new_rating
+            movie.save()
+        elif action == 'delete':
+            movie_id = int(request.POST.get('film'))
+            movie = get_object_or_404(Movie, pk=movie_id)
+            movie.delete()
+
         return HttpResponseRedirect(reverse_lazy('movies:rating_page'))
 
 
@@ -68,7 +77,7 @@ class ChooseMovie(TemplateView):
         Movie.objects.create(title=movie_data.ru_name, year=movie_data.year, link=movie_data.kp_url,
                              kp_rating=movie_data.kp_rate,
                              rating=rating, movie_user=user)
-        return HttpResponseRedirect(reverse_lazy('index_page'))
+        return HttpResponseRedirect(reverse_lazy('movies:rating_page'))
 
 
 class AddId(FormView):

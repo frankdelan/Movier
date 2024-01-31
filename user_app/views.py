@@ -20,13 +20,15 @@ class LoginUser(FormView):
     success_url = reverse_lazy('index_page')
 
     def post(self, request, *args, **kwargs):
-        username: str = request.POST['username']
-        password: str = request.POST['password']
-        user = auth.authenticate(username=username, password=password)
-        if user and user.is_active:
-            auth.login(request, user)
-            return HttpResponseRedirect(reverse_lazy('index_page'))
-
+        form = self.form_class(data=request.POST)
+        if form.is_valid():
+            username: str = request.POST['username']
+            password: str = request.POST['password']
+            user = auth.authenticate(username=username, password=password)
+            if user and user.is_active:
+                auth.login(request, user)
+                return HttpResponseRedirect(reverse_lazy('index_page'))
+        return self.form_invalid(form)
 
 class LogoutUser(View):
     def get(self, request):
