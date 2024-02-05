@@ -10,12 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
             'ws://' + window.location.host + '/ws/chat/'
         );
 
-    websocketClient.onclose = (event) => {
-        websocketClient.send(JSON.stringify({status: "disconnect",
-                                                    text: `${username} вышел из чата!`,
-                                                    username: username}));
-    };
-
     websocketClient.onopen = () => {
         websocketClient.send(JSON.stringify({status: "connect",
                                                     text: `${username} зашел в чат!`,
