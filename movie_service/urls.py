@@ -23,6 +23,7 @@ from rating_app.views import StartPage
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', StartPage.as_view(), name='index_page'),
+    path('chat/', include('chat_app.urls', namespace='chat')),
     path('users/', include('user_app.urls', namespace='users')),
     path('movies/', include('rating_app.urls', namespace='movies')),
     path('wishlist/', include('wishlist_app.urls', namespace='wishlists'))

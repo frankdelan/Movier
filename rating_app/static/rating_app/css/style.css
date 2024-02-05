@@ -337,6 +337,9 @@ body .wrapper form .update-btn {
   margin-top: 15px;
   align-items: center;
 }
+body .wrapper form .pagination{
+  margin-top: 20px;
+}
 
 body .wrapper form .update-btn button {
   font-size: 20px;

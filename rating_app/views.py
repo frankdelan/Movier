@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
 from django.shortcuts import HttpResponseRedirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -24,7 +25,21 @@ class ShowRating(ListView):
     def get_queryset(self):
         user = self.request.user
         ordering = self.request.GET.get('order', 'title')
-        return Movie.objects.filter(movie_user=user).order_by(ordering)
+        object_list = Movie.objects.filter(movie_user=user).order_by(ordering)
+
+        items_per_page = 10
+
+        paginator = Paginator(object_list, items_per_page)
+
+        page = self.request.GET.get('page')
+
+        try:
+            objects = paginator.page(page)
+        except PageNotAnInteger:
+            objects = paginator.page(1)
+        except EmptyPage:
+            objects = paginator.page(paginator.num_pages)
+        return objects
 
     def post(self, request):
         action = request.POST.get('action')

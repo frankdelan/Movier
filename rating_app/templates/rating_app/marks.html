@@ -61,6 +61,23 @@
                 </table>
             </div>
         </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if object_list.has_previous %}
+                <a href="?page=1"><b> << </b></a>
+                <a href="?page={{ object_list.previous_page_number }}"><b><</b></a>
+            {% endif %}
+
+            <span class="current">
+                Страница {{ object_list.number }} из {{ object_list.paginator.num_pages }}
+            </span>
+
+            {% if object_list.has_next %}
+                <a href="?page={{ object_list.next_page_number }}"><b> > </b></a>
+                <a href="?page={{ object_list.paginator.num_pages }}"><b> >> </b></a>
+            {% endif %}
+        </span>
+    </div>
         <div class="update-btn">
             <div class="update-rating">
                 <h3>Измените оценку</h3>

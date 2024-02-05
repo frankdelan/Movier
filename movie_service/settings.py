@@ -28,10 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user_app',
+    'chat_app',
     'rating_app',
     'wishlist_app'
 ]
@@ -60,7 +62,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'user_app/templates/user_app',
                  BASE_DIR / 'rating_app/templates/rating_app',
-                 BASE_DIR / 'wishlist_app/templates/wishlist_app'],
+                 BASE_DIR / 'wishlist_app/templates/wishlist_app',
+                 BASE_DIR / 'chat_app/templates/wishlist_app'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,8 +76,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'movie_service.wsgi.application'
 
+WSGI_APPLICATION = 'movie_service.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -125,12 +128,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATICFILES_DIRS = [
-    BASE_DIR / "user_app/static/user_app",
-    BASE_DIR / "rating_app/static/rating_app",
-    BASE_DIR / "wishlist_app/static/wishlist_app",
-]
-
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -142,3 +139,11 @@ MEDIA_URL = 'media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ASGI_APPLICATION = "movie_service.asgi.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}

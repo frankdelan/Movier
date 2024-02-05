@@ -30,6 +30,7 @@ class LoginUser(FormView):
                 return HttpResponseRedirect(reverse_lazy('index_page'))
         return self.form_invalid(form)
 
+
 class LogoutUser(View):
     def get(self, request):
         auth.logout(request)
